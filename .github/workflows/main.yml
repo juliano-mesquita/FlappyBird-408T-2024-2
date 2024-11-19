@@ -4,12 +4,9 @@ on:
   push:
       branches:
             - main
-
 jobs: #build do ios e android
  build:
   runs-on: ubuntu-latest
- ios-build:
-  runs-on: macos-latest
   steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
