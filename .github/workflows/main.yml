@@ -1,47 +1,45 @@
 name: Flutter CI/CD
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
 
 jobs: #build do ios e android
-build:
-runs-on: ubuntu-latest
-ios-build:
-runs-on: macos-latest
+ build:
+  runs-on: ubuntu-latest
+ ios-build:
+  runs-on: macos-latest
 
 
-steps:
-- name: Checkout Repository
-uses: actions/checkout@v3
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-- name: Set up Flutter
-uses: subosito/flutter-action@v2
-with:
-flutter-version: 'stable'
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: 'stable'
 
-name: Cache Dependencies
-uses: actions/cache@v2
-with:
+    - name: Cache Dependencies
+      uses: actions/cache@v2
+      with:
 
-path: ~/.pub-cache
-key: ${{ runner.os }}-pub-${{ hashFiles('\*\*/pubspec.yaml') }}
+        path: ~/.pub-cache
+        key: ${{ runner.os }}-pub-${{ hashFiles('\*\*/pubspec.yaml') }}
 
-- name: Install Dependencies
-run: flutter pub get
+    - name: Install Dependencies
+      run: flutter pub get
 
-- name: Install CocoaPods
-run: pod install --project-directory=ios
+    - name: Install CocoaPods
+      run: pod install --project-directory=ios
 
-- name: Build APK
-run: flutter build apk --release
+    - name: Build APK
+      run: flutter build apk --release
 
-- name: Build iOS
-run: flutter build ios --release
+    - name: Build iOS
+      run: flutter build ios --release
 
-
-
-- name: Run Tests
-run: flutter test
+    - name: Run Tests
+      run: flutter test
 
