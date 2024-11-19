@@ -15,6 +15,10 @@ jobs: #build do ios e android
         run: flutter --version
       - name: Install Dependencies
         run: flutter pub get
+      - name: Install System Dependencies
+        run: 
+         sudo apt-get update
+         sudo apt-get install -y curl git unzip xz-utils libglu1-mesa
       - name: Cache Dependencies
         uses: actions/cache@v2
         with:
