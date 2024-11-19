@@ -3,33 +3,14 @@ name: Flutter CI/CD
 
 on:
   push:
-      branches:
-            - main
-jobs: 
+    branches:
+      - main
+
+jobs: #build do ios e android
  build:
   runs-on: ubuntu-latest
-  steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-        
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-          
-      - name: Get Update and ninja build
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y ninja-build libgtk-3-dev
-
-      - name: Verify Flutter Installation
-        run: flutter --version
+ ios-build:
+  runs-on: macos-latest
 
       - name: Clean Flutter Build 
         run: flutter clean
@@ -43,11 +24,36 @@ jobs:
                 path: ~/.pub-cache
                 key: ${{ runner.os }}-pub-${{ hashFiles('\*\*/pubspec.yaml') }}
 
-      - name: Run Tests
-        run: flutter test
-        
-      - name: Build APK
-        run: flutter build apk --release --dart-define=apiKeyAndroid=${{ secrets.APIKEYANDROID }} --dart-define=apiKeyIos=${{ secrets.APIKEYIOS }}
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: 'stable'
+
+    - name: Cache Dependencies
+      uses: actions/cache@v2
+      with:
+
+        path: ~/.pub-cache
+        key: ${{ runner.os }}-pub-${{ hashFiles('\*\*/pubspec.yaml') }}
+
+    - name: Install Dependencies
+      run: flutter pub get
+
+    - name: Install CocoaPods
+      run: pod install --project-directory=ios
+
+    - name: Build APK
+      run: flutter build apk --release
+
+    - name: Build iOS
+      run: flutter build ios --release
+
+    - name: Run Tests
+      run: flutter test
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
