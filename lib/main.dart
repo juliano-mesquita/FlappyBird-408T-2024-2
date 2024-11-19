@@ -6,17 +6,13 @@ class MyGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    if (kDebugMode) {
-      print('Jogo carregado');
-    }
+    debugPrint('Jogo carregado');
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    if (kDebugMode) {
-      print('Update: $dt');
-    }
+    debugPrint('Update: $dt');
   }
 
   @override
