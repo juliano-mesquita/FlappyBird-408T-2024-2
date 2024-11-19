@@ -11,17 +11,19 @@ jobs: #build do ios e android
   steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-                flutter-version: 'stable'
+      - name: Install Dependencies
+        run: flutter pub get
       - name: Cache Dependencies
         uses: actions/cache@v2
         with:
                 path: ~/.pub-cache
                 key: ${{ runner.os }}-pub-${{ hashFiles('\*\*/pubspec.yaml') }}
-      - name: Install Dependencies
-        run: flutter pub get
+      - name: Verify Flutter Installation
+        run: flutter --version
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+                flutter-version: 'stable'
       - name: Install CocoaPods
         run: pod install --project-directory=ios
       - name: Build APK
