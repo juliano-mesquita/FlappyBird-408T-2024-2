@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "37047866915",
+    "project_id": "flappybat-7e21c",
+    "storage_bucket": "flappybat-7e21c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37047866915:android:c4553214358c234d3b0396",
+        "android_client_info": {
+          "package_name": "br.mesquita.flappybat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVYLv21zqcJWBQpZnwzjPYwDF_JtPKbLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
