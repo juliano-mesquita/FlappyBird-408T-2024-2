@@ -68,6 +68,7 @@ flutter:
     - assets/images/morgeco3.jpg
     - assets/images/morcego4.jpg
     - assets/images/Chao.png
+    - assets/images/estaca.png
     - assets/sounds/asas.mp4
     - assets/sounds/coin.mp4
     - assets/sounds/defeat.mp4
