@@ -51,6 +51,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+  dart_define: ^2.1.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -101,3 +102,48 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+dart_define:
+
+    # OPTIONAL: Whether to generate the dart boilerplate or not. 
+    # Defaults to true
+    dart: true 
+
+    # OPTIONAL: Whether to generate the json boilerplate or not. 
+    # Defaults to true
+    json: true 
+
+    # OPTIONAL: The path to the json file to generate. 
+    # Defaults to dart_define.json
+    json_path: dart_define.json 
+       
+    # OPTIONAL: The path to the dart file to generate. 
+    # Defaults to lib/dart_define.gen.dart
+    dart_path: lib/dart_define.gen.dart 
+       
+    # OPTIONAL: The name of the generated class. 
+    # Defaults to dart_define
+    class_name: dart_define 
+
+    # REQUIRED: The variables to add to the generated config files
+    variables: 
+
+          # REQUIRED: The name of the variable
+        - name: APIKEYANDROID 
+
+          # REQUIRED: The description of the variable
+          description: API para acessar o firebase android 
+
+          # REQUIRED: If `required` is false, this field is mandatory. 
+          # Otherwise, it is ignored.
+          default: hello world! 
+
+          # OPTIONAL: If this is set to true, the CLI tool will 
+          # throw an exception if the variable is not provided 
+          # as an argument. This is handy when using the tool
+          # in CI/CD pipelines.
+          # Defaults to true.
+          required: false
+        - name: APIKEYIOS
+          description: API para acessar o firebase ios
+          default: hello world!
+          required: false 
