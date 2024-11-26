@@ -67,7 +67,11 @@ flutter:
     - assets/images/morgeco2.jpg
     - assets/images/morgeco3.jpg
     - assets/images/morcego4.jpg
-    - assets/sounds/
+    - assets/images/Chao.png
+    - assets/sounds/asas.mp4
+    - assets/sounds/coin.mp4
+    - assets/sounds/defeat.mp4
+    - assets/sounds/trilha.mp4
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
