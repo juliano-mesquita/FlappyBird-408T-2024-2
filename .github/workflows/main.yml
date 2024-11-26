@@ -31,8 +31,8 @@ jobs: #build do ios e android
         with:
                 path: ~/.pub-cache
                 key: ${{ runner.os }}-pub-${{ hashFiles('\*\*/pubspec.yaml') }}
-      - name: Install CocoaPods
-        run: pod install --project-directory=ios
+     # - name: Install CocoaPods
+     #   run: pod install --project-directory=ios
       - name: Build APK
         run: flutter build apk --release
       - name: Build iOS
