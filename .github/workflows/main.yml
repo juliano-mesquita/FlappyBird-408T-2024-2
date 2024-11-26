@@ -23,9 +23,6 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           
-      - name: Accept Android
-        run: flutter doctor --android--licenses
-        
       - name: Get Update and ninja build
         run: |
           sudo apt-get update -y
@@ -42,7 +39,10 @@ jobs:
         with:
                 path: ~/.pub-cache
                 key: ${{ runner.os }}-pub-${{ hashFiles('\*\*/pubspec.yaml') }}
-
+     
+      - name: Accept Android
+        run: flutter doctor --android--licenses
+        
       - name: Build APK
         run: flutter build apk --release
         
