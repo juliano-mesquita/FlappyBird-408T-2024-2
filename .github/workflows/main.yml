@@ -29,7 +29,7 @@ jobs:
       - name: Set up Android SDK
         env:
                ANDROID_HOME: $ {{ runner.tool_cache }}/android-sdk
-               #PATH: $ {{ runner.tool_cache }}/android-sdk/cmdline-tools/latest/bin:$
+               PATH: ${{ runner.tool_cache }}/android-sdk/cmdline-tools/latest/bin:${{ runner.tool_cache }}/android-sdk/platform-tools:${{ runner.tool_cache }}/android-sdk/tools/bin:${{ env.PATH }}
                
       - name: Get Update and ninja build
         run: |
