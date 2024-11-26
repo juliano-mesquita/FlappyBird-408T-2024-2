@@ -1,0 +1,57 @@
+
+name: Flutter CI/CD
+
+on:
+  push:
+      branches:
+            - ci/buildpipeline
+jobs: 
+ build:
+  runs-on: ubuntu-latest
+  steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          
+      - name: Get Update and ninja build
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev
+
+      - name: Verify Flutter Installation
+        run: flutter --version
+
+      - name: Clean Flutter Build 
+        run: flutter clean
+        
+      - name: Install Dependencies
+        run: flutter pub get
+        
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+                path: ~/.pub-cache
+                key: ${{ runner.os }}-pub-${{ hashFiles('\*\*/pubspec.yaml') }}
+
+      - name: Run Tests
+        run: flutter test
+        
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+                name: app-release.apk #a ser modificado
+                path: build/app/outputs/flutter-apk/app-release.apk
+        
