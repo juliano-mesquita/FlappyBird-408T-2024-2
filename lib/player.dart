@@ -18,7 +18,7 @@ class Player extends SpriteComponent{
   @override
   FutureOr<void> onLoad() async {
     
-    final image = await Flame.images.load('spritesPersonagem.png');
+    final image = await Flame.images.load('morcego1.png');
     final size = Vector2(948, 865);
 
     final playerFrame = Sprite(
