@@ -47,7 +47,7 @@ jobs:
         run: flutter test
         
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --release --dart-define=apiKeyAndroid=${{ secrets.APIKEYANDROID }} --dart-define=apiKeyIos=${{ secrets.APIKEYIOS }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
