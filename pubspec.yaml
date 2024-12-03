@@ -66,18 +66,14 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/morcego1.jpg
-    - assets/images/morgeco2.jpg
-    - assets/images/morgeco3.jpg
-    - assets/images/morcego4.jpg
-    - assets/images/fundo.png
-    - assets/images/Chao.png
-    - assets/images/estaca.png
-    - assets/sounds/asas.mp4
-    - assets/sounds/coin.mp4
-    - assets/sounds/defeat.mp4
-    - assets/sounds/trilha.mp4
-    - assets/images/spritesPersonagem.png
+    - assets/images/config_tela/
+        - assets/images/pause/
+            - assets/images/score/
+                - assets/images/tela_inicial/
+                    - assets/images/tela_jogo/
+                        - assets/images/
+    - assets/sounds/
+        - assets/fonts/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
