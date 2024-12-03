@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 
 import 'game/flappy_game.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     GameWidget(game: FlappyGame()),
   );
