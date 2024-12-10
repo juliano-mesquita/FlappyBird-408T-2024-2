@@ -54,5 +54,9 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v3
         with:
+          name: test-coverage
+          path: coverage/lcov.info
 
+      - name: Run Integration Tests
         run: flutter drive --target=test/integration_test/app_test.dart
+
