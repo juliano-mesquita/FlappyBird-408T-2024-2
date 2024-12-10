@@ -26,8 +26,8 @@ class Obstacle extends PositionComponent {
 
   @override
   FutureOr<void> onLoad() async {
-    final topImage = await Flame.images.load('Estaca.png');
-    final bottomImage = await Flame.images.load('Estaca.png');
+    final topImage = await Flame.images.load('estaca.png');
+    final bottomImage = await Flame.images.load('estaca.png');
 
     top = ObstaclePart(position: Vector2(size.x, topY));
     top.sprite = Sprite(topImage);

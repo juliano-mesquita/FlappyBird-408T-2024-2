@@ -17,13 +17,4 @@ class FlappyGame extends FlameGame {
     super.update(dt);
     obstacle.move((size.x * 0.4) * dt, size.x);
   }
-
-  @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-    Paint cor = Paint();
-    cor.color = Colors.white;
-
-    canvas.drawCircle(Offset(size.x / 2, size.y / 2), 100, cor);
-  }
 }
