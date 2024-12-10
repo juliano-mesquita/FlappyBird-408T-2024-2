@@ -58,7 +58,6 @@ jobs:
           path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Notify Build Success
-        if: success()
         run: echo "Build completed successfully. APK is ready."
 
         
