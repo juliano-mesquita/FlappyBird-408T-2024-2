@@ -1,4 +1,3 @@
-
 class RunningState {
 void startGravity() {
 print("Aplicando gravidade ao pássaro...");
