@@ -7,8 +7,7 @@ import 'package:flutter/foundation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if(!kDebugMode)
-  {
+  if (!kDebugMode) {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );

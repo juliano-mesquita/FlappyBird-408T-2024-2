@@ -1,25 +1,20 @@
 import 'package:flame/game.dart';
+import 'package:flappy_bat/components/obstacle.dart';
 import 'package:flutter/material.dart';
 
 class FlappyGame extends FlameGame {
+  late Obstacle obstacle;
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    obstacle = Obstacle(size: Vector2(0, size.y));
+    add(obstacle);
     debugPrint('Jogo carregado');
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    debugPrint('Update: $dt');
-  }
-
-  @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-    Paint cor = Paint();
-    cor.color = Colors.white;
-
-    canvas.drawCircle(Offset(size.x / 2, size.y / 2), 100, cor);
+    obstacle.move((size.x * 0.4) * dt, size.x);
   }
 }
