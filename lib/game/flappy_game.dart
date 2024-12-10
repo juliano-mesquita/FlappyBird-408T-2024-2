@@ -1,6 +1,5 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-
 class FlappyGame extends FlameGame {
   @override
   Future<void> onLoad() async {
@@ -11,7 +10,21 @@ class FlappyGame extends FlameGame {
   @override
   void update(double dt) {
     super.update(dt);
-    debugPrint('Update: $dt');
+    switch (currentState) {
+        case GameState.preStart:
+          debugPrint('Game is in preStartMode');
+          break;
+        case GameState.running:
+          debugPrint('Game is in runningMode');
+          break;
+        case GameState.paused:
+          debugPrint('Game is in pauseMode');
+          break;
+        case GameState.gameOver:
+          debugPrint('Game is in gameOverMode');
+          break;
+    }
+
   }
 
   @override
@@ -23,3 +36,4 @@ class FlappyGame extends FlameGame {
     canvas.drawCircle(Offset(size.x / 2, size.y / 2), 100, cor);
   }
 }
+
