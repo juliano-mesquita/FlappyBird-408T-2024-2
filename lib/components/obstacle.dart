@@ -5,11 +5,11 @@ import 'package:flame/flame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class ObstacleData extends SpriteComponent {
-  ObstacleData({required super.position});
+class ObstaclePart extends SpriteComponent {
+  ObstaclePart({required super.position});
 }
 
-class GameComponent extends PositionComponent {
+class Obstacle extends PositionComponent {
   double get bottomY => middlePoint + offset;
   double get topY => middlePoint - offset;
   int middlePoint = 0;
@@ -17,22 +17,22 @@ class GameComponent extends PositionComponent {
   double offset = 100;
   late final max = (size.y * 0.8).round();
   late final min = (size.y * 0.2).round();
-  late ObstacleData top;
-  late ObstacleData bottom;
+  late ObstaclePart top;
+  late ObstaclePart bottom;
 
   bool isInitialized = false;
 
-  GameComponent({super.size});
+  Obstacle({super.size});
 
   @override
   FutureOr<void> onLoad() async {
     final topImage = await Flame.images.load('Estaca.png');
     final bottomImage = await Flame.images.load('Estaca.png');
 
-    top = ObstacleData(position: Vector2(size.x, topY));
+    top = ObstaclePart(position: Vector2(size.x, topY));
     top.sprite = Sprite(topImage);
     top.angle = 180 * (pi / 180);
-    bottom = ObstacleData(position: Vector2(size.x, bottomY));
+    bottom = ObstaclePart(position: Vector2(size.x, bottomY));
     bottom.sprite = Sprite(bottomImage);
 
     add(top);

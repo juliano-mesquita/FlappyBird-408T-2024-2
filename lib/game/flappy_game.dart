@@ -3,19 +3,19 @@ import 'package:flappy_bat/components/obstacle.dart';
 import 'package:flutter/material.dart';
 
 class FlappyGame extends FlameGame {
-  late GameComponent gameComponent;
+  late Obstacle obstacle;
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    gameComponent = GameComponent(size: Vector2(0, size.y));
-    add(gameComponent);
+    obstacle = Obstacle(size: Vector2(0, size.y));
+    add(obstacle);
     debugPrint('Jogo carregado');
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    gameComponent.move((size.x * 0.4) * dt, size.x);
+    obstacle.move((size.x * 0.4) * dt, size.x);
   }
 
   @override
