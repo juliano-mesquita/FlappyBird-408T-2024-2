@@ -1,4 +1,4 @@
-package com.example.flappy_bat
+package br.mesquita.flappybat
 
 import io.flutter.embedding.android.FlutterActivity
 
