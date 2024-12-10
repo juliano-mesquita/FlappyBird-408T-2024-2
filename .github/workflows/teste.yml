@@ -50,10 +50,5 @@ jobs:
       - name: Run Unit Tests
         run: flutter test --coverage
 
-      - name: Upload Test Coverage Report
-        if: success()
-        uses: actions/upload-artifact@v3
-        with:
-        
+      - name: Run Widget and Integration Tests
         run: flutter drive --target=test/integration_test/app_test.dart
-
