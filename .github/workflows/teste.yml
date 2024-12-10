@@ -11,34 +11,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Clonar repositório
       - name: Clone repository
         uses: actions/checkout@v4
 
+      # Configurar Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
 
+      # Configurar Java
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
+      # Instalar dependências do sistema
       - name: Install system dependencies
         run: |
           sudo apt-get update -y
           sudo apt-get install -y ninja-build libgtk-3-dev
 
+      # Verificar instalação do Flutter
       - name: Verify Flutter Installation
         run: flutter --version
 
+      # Limpar build anterior
       - name: Clean Flutter Build
         run: flutter clean
 
+      # Instalar dependências do projeto
       - name: Install Dependencies
         run: flutter pub get
 
+      # Cache de dependências
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:
@@ -47,8 +55,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pub-
 
+      # Executar testes unitários
       - name: Run Unit Tests
         run: flutter test --coverage
 
+      # Executar testes de integração e widgets
       - name: Run Widget and Integration Tests
         run: flutter drive --target=test/integration_test/app_test.dart
