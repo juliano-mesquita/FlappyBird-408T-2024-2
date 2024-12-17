@@ -20,7 +20,17 @@ print("Mudança de estado: $_currentState");
 }
           break;
         case GameState.running:
-          debugPrint('Game is in runningMode');
+         void startGravity() {
+         print("Aplicando gravidade ao pássaro...");
+         }
+
+        void checkCollisions() {
+        print("Verificando colisões...");
+        }
+
+void moveObstacles() {
+print("Movendo os obstáculos...");
+}
           break;
         case GameState.paused:
           void resumeGame(StateManager stateManager) {
