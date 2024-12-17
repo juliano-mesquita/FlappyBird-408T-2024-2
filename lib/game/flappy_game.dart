@@ -2,14 +2,8 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'game_state.dart';
 
-class FlappyGame extends FlameGame {
-  @override
-  Future<void> onLoad() async {
-    super.onLoad();
-    debugPrint('Jogo carregado');
-  }
 
-  enum GameState { preStart, running, paused, gameOver }
+ enum GameState { preStart, running, paused, gameOver }
 
   class StateManager {
     GameState _currentState = GameState.preStart;
@@ -25,6 +19,13 @@ class FlappyGame extends FlameGame {
     bool isPaused() => _currentState == GameState.paused;
     bool isGameOver() => _currentState == GameState.gameOver;
     bool isPreStart() => _currentState == GameState.preStart;
+  }
+
+class FlappyGame extends FlameGame {
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+    debugPrint('Jogo carregado');
   }
 
   // Funções que foram movidas para fora do switch
