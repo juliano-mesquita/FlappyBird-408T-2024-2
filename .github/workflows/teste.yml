@@ -52,5 +52,3 @@ jobs:
 
       - name: Run Integration Tests
         run: flutter drive --target=test/integration_test/app_test.dart
-
-
