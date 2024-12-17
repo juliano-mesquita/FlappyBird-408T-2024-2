@@ -1,25 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const GameScreen(),
-    );
-  }
-}
-
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
 
@@ -39,7 +19,6 @@ class _GameScreenState extends State<GameScreen> {
   void _restartGame() {
     setState(() {
       _isPaused = false;
-      // Outros estados do jogo podem ser redefinidos aqui
     });
   }
 
@@ -56,16 +35,14 @@ class _GameScreenState extends State<GameScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Exibir a imagem de fundo quando o jogo estiver pausado
+
           if (_isPaused)
             Positioned.fill(
               child: Image.asset(
-                'assets/imagens/img_de_fundo.png', // A imagem de fundo
+                'assets/imagens/img_de_fundo.png', 
                 fit: BoxFit.cover,
               ),
             ),
-
-          // Texto central indicando se o jogo está pausado ou rodando
           Center(
             child: Text(
               _isPaused ? 'Game Paused' : 'Game Running',
