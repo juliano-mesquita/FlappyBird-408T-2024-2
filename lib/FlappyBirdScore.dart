@@ -9,27 +9,32 @@ import 'player.dart';
 class FlappyBirdScore extends Component {
   int score = 0;
   int highScore = 0;
-  bool isPlaying = false;
-  late Timer gameTimer;
+  Player player;  
+  List<Obstacle> obstacles; 
 
-  void startGame() {
-      score = 0;
-      isPlaying = true;
-  }
-  
-  void onUpdate(){
-    if(isPlaying == true){
-      Timer(const Duration(seconds: 1) as double, onTick: timer);
-    } else { // else if (gameover == true){ - tem q verificar o nome certo
-     FileManager.saveHighScore(score);
+  FlappyBirdScore({required this.player, required this.obstacles});
+
+  bool playerPassedObstacle() {
+    for (var obstacle in obstacles) {
+      
+      if (player.posicao > obstacle.top.position.x &&
+        player.posicao < obstacle.bottom.position.x) {
+      
+      if (obstacle.middlePoint > 150) {  
+        score += 2;  
+      } else {
+        score += 1; 
+      }
+        return true;
+      }
     }
+    return false; 
   }
 
-  void timer(){
-    score++;
-    if(score > highScore){
-      highScore = score;
-      debugPrint('Score: $score');
+  
+  void update(double deltaTime) {
+    if (playerPassedObstacle()) {
+      FileManager.saveHighScore(score);
     }
   }
 
