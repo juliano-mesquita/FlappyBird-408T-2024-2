@@ -28,7 +28,6 @@ class FlappyGame extends FlameGame {
     debugPrint('Jogo carregado');
   }
 
-  // Funções que foram movidas para fora do switch
   void showMenu() {
     print("Exibindo menu inicial...");
   }
