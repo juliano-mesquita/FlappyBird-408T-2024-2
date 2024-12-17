@@ -1,14 +1,13 @@
-name: Flutter Build Pipeline
+name: Flutter Test Pipeline
 
 on:
-  workflow_run:
-    workflows: ["Flutter Test Pipeline"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  build-app:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  run-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -50,16 +49,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-flutter-
 
-      - name: Build APK (Release)
-        run: flutter build apk --release
+      - name: Run Unit Tests
+        run: flutter test
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-release.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+      - name: Run Widget Tests (Optional, if applicable)
+        run: flutter test --target=test/widget_test.dart 
 
-      - name: Notify Build Success
-        run: echo "Build completed successfully. APK is ready."
+      - name: Run Integration Tests
+        run: flutter drive --target=test/integration_test/app_test.dart
 
 
