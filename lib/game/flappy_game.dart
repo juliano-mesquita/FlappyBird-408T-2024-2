@@ -23,7 +23,10 @@ print("Mudança de estado: $_currentState");
           debugPrint('Game is in runningMode');
           break;
         case GameState.paused:
-          debugPrint('Game is in pauseMode');
+          void resumeGame(StateManager stateManager) {
+print("Retomando o jogo...");
+stateManager.changeState(GameState.running);
+}
           break;
         case GameState.gameOver:
          void restartGame(StateManager stateManager) {
