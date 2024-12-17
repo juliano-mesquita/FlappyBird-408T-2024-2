@@ -42,13 +42,18 @@ jobs:
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:
-          path: ~/.pub-cache
-          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
+          path: |
+            ~/.pub-cache
+            build/
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pub-
+            ${{ runner.os }}-flutter-
 
       - name: Run Unit Tests
         run: flutter test
+
+      - name: Run Widget Tests (Optional, if applicable)
+        run: flutter test --target=test/widget_test.dart  # Este comando pode ser ajustado se houver testes específicos
 
       - name: Run Integration Tests
         run: flutter drive --target=test/integration_test/app_test.dart
