@@ -1,6 +1,5 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'game_state.dart';
 
 enum GameState { preStart, running, paused, gameOver }
 
