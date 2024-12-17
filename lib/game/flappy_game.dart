@@ -14,9 +14,17 @@ class FlappyGame extends FlameGame {
     super.update(dt);
     switch (currentState) {
         case GameState.preStart:
-          void changeState(GameState newState) {
-_currentState = newState;
-print("Mudança de estado: $_currentState");
+         void showMenu() {
+print("Exibindo menu inicial...");
+}
+
+void startGame(StateManager stateManager) {
+print("Iniciando o jogo...");
+stateManager.changeState(GameState.running);
+}
+
+void showScoreBoard() {
+print("Exibindo placar de pontuação...");
 }
           break;
         case GameState.running:
