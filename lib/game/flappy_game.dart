@@ -23,7 +23,9 @@ class FlappyGame extends FlameGame {
           debugPrint('Game is in pauseMode');
           break;
         case GameState.gameOver:
-          debugPrint('Game is in gameOverMode');
+         void restartGame(StateManager stateManager) {
+         print("Reiniciando o jogo...");
+         stateManager.changeState(GameState.preStart);
           break;
     }
 
