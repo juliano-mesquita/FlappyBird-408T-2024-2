@@ -52,6 +52,8 @@ class GameScreen extends StatelessWidget {
   }
 
   void _openScoreboard(BuildContext context) {
+    //TODO buscar score do banco
+
     final scores = [
       {'name': 'Jogador 1', 'score': 4500},
       {'name': 'Jogador 2', 'score': 4300},
