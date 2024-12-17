@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'components/obstacle.dart';
+import 'player.dart';
 
 class FlappyBirdScore extends Component {
   int score = 0;
