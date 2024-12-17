@@ -8,7 +8,6 @@ class FlappyGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    score.startGame;
 
     debugPrint('Jogo carregado');
   }
