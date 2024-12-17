@@ -1,17 +1,14 @@
-name: Flutter CI/CD
+name: Flutter Build Pipeline
 
 on:
-  push:
-    branches:
-      - main
   workflow_run:
     workflows: ["Flutter Test Pipeline"]
     types:
       - completed
 
 jobs:
-  build:
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' }}
+  build-app:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -46,16 +43,15 @@ jobs:
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:
-          path: ~/.pub-cache
-          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
+          path: |
+            ~/.pub-cache
+            build/
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pub-
-
-      - name: Run Tests
-        run: flutter test
+            ${{ runner.os }}-flutter-
 
       - name: Build APK (Release)
-        run: flutter build apk --release --dart-define=apiKeyAndroid=${{ secrets.APIKEYANDROID }} --dart-define=apiKeyIos=${{ secrets.APIKEYIOS }}
+        run: flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
@@ -65,4 +61,5 @@ jobs:
 
       - name: Notify Build Success
         run: echo "Build completed successfully. APK is ready."
+
 
