@@ -49,6 +49,8 @@ class FlappyBirdScore extends Component {
   // }
 
   //file de salvar score
+  }
+
   class FileManager {
     static Future<void> saveHighScore(int score) async {
       try {  
@@ -61,6 +63,5 @@ class FlappyBirdScore extends Component {
         debugPrint('Error $e');
       }
     }  
-  }
 
 }
