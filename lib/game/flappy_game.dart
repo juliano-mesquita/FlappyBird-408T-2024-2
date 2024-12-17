@@ -8,7 +8,7 @@ class FlappyGame extends FlameGame {
     super.onLoad();
     debugPrint('Jogo carregado');
   }
-
+  
   @override
   void update(double dt) {
     super.update(dt);
