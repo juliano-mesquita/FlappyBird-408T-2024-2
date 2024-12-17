@@ -1,4 +1,4 @@
-import 'package:flappy_bat/states/game_state.dart';
+import 'package:flappy_bat/game/flapy_game.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
