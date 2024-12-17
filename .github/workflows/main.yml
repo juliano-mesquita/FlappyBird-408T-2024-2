@@ -1,14 +1,17 @@
-name: Flutter Build Pipeline
+name: Flutter CI/CD
 
 on:
+  push:
+    branches:
+      - main
   workflow_run:
     workflows: ["Flutter Test Pipeline"]
     types:
       - completed
 
 jobs:
-  build-app:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -48,6 +51,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pub-
 
+      - name: Run Tests
+        run: flutter test
+
       - name: Build APK (Release)
         run: flutter build apk --release --dart-define=apiKeyAndroid=${{ secrets.APIKEYANDROID }} --dart-define=apiKeyIos=${{ secrets.APIKEYIOS }}
 
@@ -59,5 +65,4 @@ jobs:
 
       - name: Notify Build Success
         run: echo "Build completed successfully. APK is ready."
-
 
