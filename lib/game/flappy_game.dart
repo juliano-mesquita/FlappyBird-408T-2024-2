@@ -2,24 +2,23 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'game_state.dart';
 
+enum GameState { preStart, running, paused, gameOver }
 
- enum GameState { preStart, running, paused, gameOver }
+class StateManager {
+  GameState _currentState = GameState.preStart;
 
-  class StateManager {
-    GameState _currentState = GameState.preStart;
+  GameState get currentState => _currentState;
 
-    GameState get currentState => _currentState;
-
-    void changeState(GameState newState) {
-      _currentState = newState;
-      print("Mudança de estado: $_currentState");
-    }
-
-    bool isRunning() => _currentState == GameState.running;
-    bool isPaused() => _currentState == GameState.paused;
-    bool isGameOver() => _currentState == GameState.gameOver;
-    bool isPreStart() => _currentState == GameState.preStart;
+  void changeState(GameState newState) {
+    _currentState = newState;
+    print("Mudança de estado: $_currentState");
   }
+
+  bool isRunning() => _currentState == GameState.running;
+  bool isPaused() => _currentState == GameState.paused;
+  bool isGameOver() => _currentState == GameState.gameOver;
+  bool isPreStart() => _currentState == GameState.preStart;
+}
 
 class FlappyGame extends FlameGame {
   @override
