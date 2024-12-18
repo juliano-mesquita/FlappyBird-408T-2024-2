@@ -1,0 +1,299 @@
+import 'package:flutter/material.dart';
+
+
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Game App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MainMenuScreen(),
+    );
+  }
+}
+
+// Tela Principal (Menu)
+class MainMenuScreen extends StatelessWidget {
+  const MainMenuScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Menu Principal'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Botão para Iniciar o Jogo
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const GameScreen(),
+                  ),
+                );
+              },
+              child: const Text('Iniciar Jogo'),
+            ),
+            const SizedBox(height: 20),
+
+            // Botão para Configurações
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsScreen(),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+              ),
+              child: const Text('Configurações'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Tela do Jogo
+class GameScreen extends StatefulWidget {
+  const GameScreen({super.key});
+
+  @override
+  State<GameScreen> createState() => _GameScreenState();
+}
+
+class _GameScreenState extends State<GameScreen> {
+  bool _isPaused = false;
+
+  void _togglePause() {
+    setState(() {
+      _isPaused = !_isPaused;
+    });
+  }
+
+  void _restartGame() {
+    setState(() {
+      _isPaused = false;
+    });
+  }
+
+  void _exitToMenu() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const MainMenuScreen(),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Fundo do jogo
+          if (!_isPaused)
+            Positioned.fill(
+              child: Image.asset(
+                'assets/imagens/img_de_fundo.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          Center(
+            child: Text(
+              _isPaused ? 'Game Paused' : 'Game Running',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          if (_isPaused)
+            Center(
+              child: ClipPath(
+                clipper: PauseMenuClipper(),
+                child: Container(
+                  width: 400,
+                  height: 500,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 5,
+                        offset: const Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildPauseButton(_togglePause, 'play.png'),
+                      const SizedBox(height: 40),
+                      _buildPauseButton(_restartGame, 'restart.png'),
+                      const SizedBox(height: 40),
+                      _buildPauseButton(_exitToMenu, 'exit.png'),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          if (_isPaused)
+            Positioned(
+              top: 40,
+              right: 20,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: _togglePause,
+              ),
+            ),
+        ],
+      ),
+      floatingActionButton: GestureDetector(
+        onTap: _togglePause,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(
+              'assets/imagens/botão-1.png',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+            Image.asset(
+              'assets/imagens/play.png',
+              width: 40,
+              height: 40,
+              fit: BoxFit.contain,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPauseButton(VoidCallback onPressed, String iconPath) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: IconButton(
+        icon: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(
+              'assets/imagens/botão-1.png',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+            Image.asset(
+              'assets/imagens/$iconPath',
+              width: 40,
+              height: 40,
+              fit: BoxFit.contain,
+            ),
+          ],
+        ),
+        onPressed: onPressed,
+      ),
+    );
+  }
+}
+
+// Clipper para o menu de pausa
+class PauseMenuClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.moveTo(45, 0);
+    path.lineTo(size.width - 45, 0);
+    path.quadraticBezierTo(size.width, 0, size.width, 45);
+    path.lineTo(size.width, size.height - 45);
+    path.quadraticBezierTo(size.width, size.height, size.width - 45, size.height);
+    path.lineTo(45, size.height);
+    path.quadraticBezierTo(0, size.height, 0, size.height - 45);
+    path.lineTo(0, 45);
+    path.quadraticBezierTo(0, 0, 45, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+}
+
+// Tela de Configurações
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  double _musicVolume = 0.5;
+  double _effectsVolume = 0.5;
+  bool _musicEnabled = true;
+  bool _effectsEnabled = true;
+
+  void _saveSettings() {
+    print('Configurações salvas: Música: $_musicEnabled ($_musicVolume), '
+        'Efeitos: $_effectsEnabled ($_effectsVolume)');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Configurações'),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Text(
+            'Configurações',
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 30),
+          _buildToggleOption('Música', _musicEnabled, (value) {
+            setState(() {
+              _musicEnabled = value;
+            });
+            _saveSettings();
+          }),
+          if (_musicEnabled)
+            _buildVolumeSlider('Volume da Música', _musicVolume, (value) {
+              setState(() {
+                _musicVolume = value;
+              });
+              _saveSettings();
+            }),
+          const SizedBox(height: 20),
+          _buildToggleOption('Efeitos Sonoros', _effectsEnabled, (value) {
+            setState(() {
+              _effectsEnabled = value;
+            });
+            _saveSettings();
+          }),
+          if (_effectsEnabled)
+            _buildVolumeSlider('Volume dos Efeitos', _effectsVolume, (value) {
+              setState(() {
+                _effectsVolume = value;
+              });
+              _saveSettings();
+            }),
+          const SizedBox(height: 30),
+          Center(
+            child: ElevatedButton(
+              onPressed:
+ 
