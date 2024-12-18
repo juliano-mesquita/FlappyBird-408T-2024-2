@@ -1,237 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Game App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MainMenuScreen(),
-    );
-  }
-}
-
-// Tela Principal (Menu)
-class MainMenuScreen extends StatelessWidget {
-  const MainMenuScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Menu Principal'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Botão para Iniciar o Jogo
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const GameScreen(),
-                  ),
-                );
-              },
-              child: const Text('Iniciar Jogo'),
-            ),
-            const SizedBox(height: 20),
-
-            // Botão para Configurações
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const SettingsScreen(),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-              ),
-              child: const Text('Configurações'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// Tela do Jogo
-class GameScreen extends StatefulWidget {
-  const GameScreen({super.key});
-
-  @override
-  State<GameScreen> createState() => _GameScreenState();
-}
-
-class _GameScreenState extends State<GameScreen> {
-  bool _isPaused = false;
-
-  void _togglePause() {
-    setState(() {
-      _isPaused = !_isPaused;
-    });
-  }
-
-  void _restartGame() {
-    setState(() {
-      _isPaused = false;
-    });
-  }
-
-  void _exitToMenu() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const MainMenuScreen(),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          // Fundo do jogo
-          if (!_isPaused)
-            Positioned.fill(
-              child: Image.asset(
-                'assets/imagens/img_de_fundo.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          Center(
-            child: Text(
-              _isPaused ? 'Game Paused' : 'Game Running',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ),
-          if (_isPaused)
-            Center(
-              child: ClipPath(
-                clipper: PauseMenuClipper(),
-                child: Container(
-                  width: 400,
-                  height: 500,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 5,
-                        offset: const Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildPauseButton(_togglePause, 'play.png'),
-                      const SizedBox(height: 40),
-                      _buildPauseButton(_restartGame, 'restart.png'),
-                      const SizedBox(height: 40),
-                      _buildPauseButton(_exitToMenu, 'exit.png'),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          if (_isPaused)
-            Positioned(
-              top: 40,
-              right: 20,
-              child: IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: _togglePause,
-              ),
-            ),
-        ],
-      ),
-      floatingActionButton: GestureDetector(
-        onTap: _togglePause,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Image.asset(
-              'assets/imagens/botão-1.png',
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-            Image.asset(
-              'assets/imagens/play.png',
-              width: 40,
-              height: 40,
-              fit: BoxFit.contain,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPauseButton(VoidCallback onPressed, String iconPath) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: IconButton(
-        icon: Stack(
-          alignment: Alignment.center,
-          children: [
-            Image.asset(
-              'assets/imagens/botão-1.png',
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-            Image.asset(
-              'assets/imagens/$iconPath',
-              width: 40,
-              height: 40,
-              fit: BoxFit.contain,
-            ),
-          ],
-        ),
-        onPressed: onPressed,
-      ),
-    );
-  }
-}
-
-// Clipper para o menu de pausa
-class PauseMenuClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.moveTo(45, 0);
-    path.lineTo(size.width - 45, 0);
-    path.quadraticBezierTo(size.width, 0, size.width, 45);
-    path.lineTo(size.width, size.height - 45);
-    path.quadraticBezierTo(size.width, size.height, size.width - 45, size.height);
-    path.lineTo(45, size.height);
-    path.quadraticBezierTo(0, size.height, 0, size.height - 45);
-    path.lineTo(0, 45);
-    path.quadraticBezierTo(0, 0, 45, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
-}
-
-// Tela de Configurações
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -250,6 +18,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
         'Efeitos: $_effectsEnabled ($_effectsVolume)');
   }
 
+  Widget _buildToggleOption(String title, bool value, ValueChanged<bool> onChanged) {
+    return SwitchListTile(
+      title: Text(title),
+      value: value,
+      onChanged: onChanged,
+    );
+  }
+
+  Widget _buildVolumeSlider(String title, double value, ValueChanged<double> onChanged) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title),
+        Slider(
+          value: value,
+          onChanged: onChanged,
+          min: 0.0,
+          max: 1.0,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -261,7 +52,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           Text(
             'Configurações',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 30),
@@ -295,5 +86,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 30),
           Center(
             child: ElevatedButton(
-              onPressed:
- 
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Voltar'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: SettingsScreen(),
+  ));
+}
