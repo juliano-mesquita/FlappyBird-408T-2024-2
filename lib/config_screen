@@ -1,0 +1,105 @@
+import 'package:flutter/material.dart';
+
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  double _musicVolume = 0.5;
+  double _effectsVolume = 0.5;
+  bool _musicEnabled = true;
+  bool _effectsEnabled = true;
+
+  void _saveSettings() {
+    print('Configurações salvas: Música: $_musicEnabled ($_musicVolume), '
+        'Efeitos: $_effectsEnabled ($_effectsVolume)');
+  }
+
+  Widget _buildToggleOption(String title, bool value, ValueChanged<bool> onChanged) {
+    return SwitchListTile(
+      title: Text(title),
+      value: value,
+      onChanged: onChanged,
+    );
+  }
+
+  Widget _buildVolumeSlider(String title, double value, ValueChanged<double> onChanged) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title),
+        Slider(
+          value: value,
+          onChanged: onChanged,
+          min: 0.0,
+          max: 1.0,
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Configurações'),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Text(
+            'Configurações',
+            style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 30),
+          _buildToggleOption('Música', _musicEnabled, (value) {
+            setState(() {
+              _musicEnabled = value;
+            });
+            _saveSettings();
+          }),
+          if (_musicEnabled)
+            _buildVolumeSlider('Volume da Música', _musicVolume, (value) {
+              setState(() {
+                _musicVolume = value;
+              });
+              _saveSettings();
+            }),
+          const SizedBox(height: 20),
+          _buildToggleOption('Efeitos Sonoros', _effectsEnabled, (value) {
+            setState(() {
+              _effectsEnabled = value;
+            });
+            _saveSettings();
+          }),
+          if (_effectsEnabled)
+            _buildVolumeSlider('Volume dos Efeitos', _effectsVolume, (value) {
+              setState(() {
+                _effectsVolume = value;
+              });
+              _saveSettings();
+            }),
+          const SizedBox(height: 30),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Voltar'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: SettingsScreen(),
+  ));
+}
